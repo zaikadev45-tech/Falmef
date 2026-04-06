@@ -14,3 +14,11 @@ Escaneia as portas de 1 até 65355
 
 ## para compilar:
 `gcc -O3 falmef.c -o falmef`
+
+## como usar?:
+felmef ip:port `verifica porta específica`
+felmef ip `verifica portas conhecidas`
+
+##### exemplos:
+- felmef 127.0.0.1 -a
+- felmef 0.0.0.0:80
