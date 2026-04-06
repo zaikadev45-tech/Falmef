@@ -145,14 +145,10 @@ int main(int argc, char *argv[])
 			{
 				cf.tipo = 2;
 			}
-			//**/printf("ip: %s, porta: %d", ip, port);
 		}
-		printf("arg: %s", argv[i]);
 	}
 	printf("\n Falmef feito por zaikadev45-tech \n");
 	printf("	https://github.com/zaikadev45-tech \n");
-
-	/* debug = */printf("porta: %d \n\n", port);
 	
 	if(cf.AllPort == true)
 	{
