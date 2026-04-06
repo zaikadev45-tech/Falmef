@@ -11,3 +11,6 @@ modo CLI, retorna valores
 modo Verbose, mostra as portas fechadas 
 - `-a`
 Escaneia as portas de 1 até 65355
+
+## para compilar:
+`gcc -O3 falmef.c -o falmef`
