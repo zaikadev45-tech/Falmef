@@ -13,16 +13,13 @@ modo CLI, retorna valores
 modo Verbose, mostra as portas fechadas 
 - `-a`
 Escaneia as portas de 1 até 65355
+- `-p`
+faz scan em portas especificadas -p 80 8080 22
+- `-sY`
+Faz scan em modo SYN-Stealth
 
 ## para compilar:
-`gcc -O3 falmef.c -o falmef`
-
-## como usar?:
-felmef ip:port
-> verifica porta específica
-
-felmef ip 
-> verifica portas conhecidas
+`make`
 
 ##### exemplos:
 - felmef 127.0.0.1 -a
