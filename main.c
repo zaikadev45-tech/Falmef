@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	/* ===== Verificar os argumentos ===== */
 	if(cf.Error == true)
 	{
-		printf("ERRRRRRRROOOOO");
+		printf("\n Erro no input do usuário \n");
 		return -5;
 	}
 	
