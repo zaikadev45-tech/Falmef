@@ -18,6 +18,12 @@ faz scan em portas especificadas -p 80 8080 22
 - `-sY`
 Faz scan em modo SYN-Stealth
 
+## Requisitos:
+`sistema Linux`
+`Make`
+`Clang`
+### Testado:
+`android 10 (ROOT)`
 ## para compilar:
 `make`
 
