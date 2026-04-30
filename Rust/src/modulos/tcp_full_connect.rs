@@ -10,7 +10,7 @@ pub enum StatusPort {
     Erro,
 }
 
-pub fn full_tcp(ip: String, port: u16) -> StatusPort {
+pub fn full_tcp(ip: &str, port: u16) -> StatusPort {
     let addr = format!("{}:{}", ip, port);
 
     let addrs = match addr.to_socket_addrs() {
@@ -31,4 +31,25 @@ pub fn full_tcp(ip: String, port: u16) -> StatusPort {
         };        
     }
     StatusPort::Erro
+}
+
+pub fn ping_tcp(host: &str) -> bool {
+    let mut erros: u8 = 0;
+    let test: [u16; 3] = [64499, 65530, 65535];
+
+    for &porta in &test {
+        match full_tcp(host, porta) {
+            StatusPort::Erro | StatusPort::Filtrado => {
+                erros += 1;
+                if erros == 3 {
+                    return false;
+                }
+            }
+            StatusPort::Aberto | StatusPort::Fechado => {
+                return true;
+            }
+        } 
+    }
+
+    erros < 3
 }

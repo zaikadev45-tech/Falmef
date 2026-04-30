@@ -1,5 +1,8 @@
 use clap::Parser;
-use std::net::IpAddr;
+
+use std::net::{IpAddr, Ipv4Addr};
+use std::str::FromStr;
+use std::fmt;
 
 #[derive(Parser)]
 #[command(name = "falmef-rs")]
@@ -8,8 +11,8 @@ use std::net::IpAddr;
 
 pub struct Args {
     /// Endereço IP do alvo
-    #[arg(value_parser = clap::value_parser!(IpAddr))]
-    pub ip: IpAddr,
+    #[arg(value_parser = parse_ip)]
+    pub ip: Ip,
 
     /// Portas especificas
     #[arg(short, long,
@@ -24,4 +27,38 @@ pub struct Args {
     pub verbose: bool,
 }
 
+impl fmt::Display for Ip {
+    fn fmt(&self, f:  &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Ip::Unico(ip) => write!(f, "{}", ip),
+            Ip::SubRede {rede, mask} => write!(f, "{}/{}", rede, mask),
+        }
+    }
+}
 
+#[derive(Debug, Clone)]
+pub enum Ip {
+    Unico(IpAddr),
+    SubRede {rede: Ipv4Addr, mask: u8},
+}
+
+fn parse_ip(s: &str) -> Result<Ip, String> {
+    if s.contains('/') {
+        let partes: Vec<&str> = s.split('/').collect();
+        let rede = Ipv4Addr::from_str(partes[0])
+            .map_err(|e| format!("IP inválido: {e}"))?;
+        let mask: u8 = partes[1]
+            .parse()
+            .map_err(|_| "máscara inválida".to_string())?;
+        if mask == 8 || mask == 16 || mask == 24 || mask == 28 || mask == 30 || mask == 32 {
+            Ok(Ip::SubRede { rede, mask})
+        } else {
+            Err("máscara disponíveis: 8/16/24/28/30/32".to_string())
+        }
+    } else {
+        let ip = IpAddr::from_str(s)
+            .map_err(|e| format!("IP inválido: {e}"))?;
+        Ok(Ip::Unico(ip))
+
+    }
+}
