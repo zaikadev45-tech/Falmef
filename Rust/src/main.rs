@@ -53,6 +53,7 @@ fn main() {
                 println!("[=] Host Offline!");
                 std::process::exit(1);
             }
+            println!("[+] Host Online!");
             for port in &args.port {
                 let status = modulos::full_tcp(&ip.to_string(), *port);
                 status.exibir(*port, args.verbose);
